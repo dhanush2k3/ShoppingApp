@@ -1,97 +1,74 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+Project Summary:
 
-# Getting Started
+This project is a fully functional **React Native e-commerce application** designed with a focus on modular architecture, user experience, and efficient state management. It simulates core features of an online shopping app, including product browsing, cart management, order history, user profile updates, and wishlist functionality.
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+Key Features
 
-## Step 1: Start Metro
+Product Stack Navigation
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+  * Product listing screen with responsive grid layout
+  * Detailed product view with dynamic data passed via navigation
+  * Integrated search screen for product filtering
 
-To start the Metro dev server, run the following command from the root of your React Native project:
+User Profile Management
 
-```sh
-# Using npm
-npm start
+  * Editable user profile with real-time name and email updates
+  * Profile picture update using `react-native-image-picker`
+  * Redux state management for user data (name, email, avatar)
 
-# OR using Yarn
-yarn start
-```
+Cart System
 
-## Step 2: Build and run your app
+  * Add-to-cart functionality with quantity management
+  * Real-time total price calculation
+  * Cart item structure optimized for rendering and state updates
 
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
+Wishlist Integration
 
-### Android
+  * Add/remove products to/from wishlist
+  * Managed via Redux for global accessibility
+  * Navigation stack integrated without losing tab persistence
 
-```sh
-# Using npm
-npm run android
+Order History
 
-# OR using Yarn
-yarn android
-```
+  * Orders section available within the Profile screen
+  * Displays product thumbnails, quantities, total cost, and order date
+  * Scrollable layout using FlatList with dynamic rendering
 
-### iOS
+Custom Bottom Tab Navigation
 
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
+  * Icons with conditional styling based on focus state
+  * Layout adjustments for proper alignment and touch handling
+  * Uses `Ionicons` and a custom `CustomTabBar` component
 
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
+UI/UX Enhancements
 
-```sh
-bundle install
-```
+  * `SafeAreaView` implemented across screens for device-safe layouts
+  * Reusable styling via StyleSheet for consistent design
+  * Activity indicators and loading states during image upload
 
-Then, and every time you update your native dependencies, run:
+State Management
 
-```sh
-bundle exec pod install
-```
+  * Redux Toolkit used for efficient and scalable global state handling
+  * Modular slices for `profile`, `cart`, `wishlist`, and `orders`
+  * Typed Redux store integration with TypeScript support
 
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
+Technologies Used
 
-```sh
-# Using npm
-npm run ios
+* React Native
+* Redux Toolkit
+* React Navigation
+* TypeScript
+* React Native Image Picker
+* FlatList and ScrollView for dynamic UI rendering
 
-# OR using Yarn
-yarn ios
-```
+![ShoppingApp-category](https://github.com/user-attachments/assets/106ea2e1-cc2b-4cb5-89d2-8a975454d07c)
+![ShoppingApp-reviews](https://github.com/user-attachments/assets/f981e95c-344d-47c2-bc05-f6cf01c3ac23)
+![ShoppingApp-Pics](https://github.com/user-attachments/assets/8d6b5435-9943-44f2-937f-90c43181b995)
+![ShoppingApp-Home](https://github.com/user-attachments/assets/89bb7f21-1d52-4ca7-94de-25a91f861377)
+![ShoppingApp-details1](https://github.com/user-attachments/assets/8dc06fd6-6d87-415e-89ee-a36dd5f942b2)
+![ShoppingApp-details](https://github.com/user-attachments/assets/f6976c21-715e-4a60-98d5-65438d9c80a8)
+![shoppingApp-Wishlist](https://github.com/user-attachments/assets/9ae5ff91-2c2a-43a8-b5a5-c481a5bff47b)
+![shoppingApp-Profile](https://github.com/user-attachments/assets/95812d15-d84a-4d5c-87a6-2983023a3e6b)
+![shoppingApp-Cart](https://github.com/user-attachments/assets/0d359eed-1681-454b-96c4-f7dec35b57f2)
+![shoppingApp-OrderHistory](https://github.com/user-attachments/assets/882bdd0f-8826-46f0-a099-8290e57122e5)
 
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
-
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
-
-## Step 3: Modify your app
-
-Now that you have successfully run the app, let's make changes!
-
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
-
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
-
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
-
-## Congratulations! :tada:
-
-You've successfully run and modified your React Native App. :partying_face:
-
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
