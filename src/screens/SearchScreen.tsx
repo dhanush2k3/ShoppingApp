@@ -1,12 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import {
-  View,
   Text,
   FlatList,
-  TextInput,
   StyleSheet,
-  TouchableOpacity,
-  Image,
   ActivityIndicator,
   Dimensions,
   SafeAreaView,
@@ -24,7 +20,9 @@ import { ProductsStackParamList } from '../navigators/ProductsStack';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { addToWhishlist } from '../redux/reducers/wishlistSlice';
 
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import SearchBar from '../components/SearchProducts/SearchBar';
+import ProductCard from '../components/SearchProducts/ProductCard';
+
 const { width } = Dimensions.get('window');
 const ITEM_WIDTH = (width - 40) / 2;
 
@@ -53,42 +51,20 @@ const SearchScreen = () => {
   };
 
   const renderItem = ({ item }: { item: Product }) => (
-    <TouchableOpacity
+    <ProductCard
+      item={item}
       onPress={() => navigation.navigate('ProductDetails', { product: item })}
-    >
-      <View style={styles.Card}>
-        <View style={styles.imageWrapper}>
-          <Image source={{ uri: item.thumbnail }} style={styles.cardImage} />
-          <TouchableOpacity
-            style={styles.wishlistIcon}
-            onPress={() => {
-              dispatch(addToWhishlist(item));
-            }}
-          >
-            <Ionicons name="heart-outline" size={23} color="#999" />
-          </TouchableOpacity>
-        </View>
-        <Text style={styles.title}>{item.title}</Text>
-        <Text style={styles.price}>₹{item.price}</Text>
-      </View>
-    </TouchableOpacity>
+      onWishlistPress={() => dispatch(addToWhishlist(item))}
+    />
   );
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.searchTab}>
-        <TextInput
-          placeholder="Search products..."
-          value={query}
-          onChangeText={setQuery}
-          onSubmitEditing={handleSearch}
-          style={styles.searchInput}
-          placeholderTextColor="#999"
-        />
-        <TouchableOpacity style={styles.searchButton} onPress={handleSearch}>
-          <Text style={styles.searchText}>Search</Text>
-        </TouchableOpacity>
-      </View>
+      <SearchBar
+        value={query}
+        onChangeText={setQuery}
+        onSubmit={handleSearch}
+      />
 
       {loading && <ActivityIndicator size="large" color="#000" />}
 

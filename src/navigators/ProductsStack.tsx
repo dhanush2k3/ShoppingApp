@@ -14,7 +14,7 @@ export type ProductsStackParamList = {
 const Stack = createNativeStackNavigator<ProductsStackParamList>();
 
 const ProductsStack = () => (
-  <Stack.Navigator>
+  <Stack.Navigator initialRouteName="ProductList">
     <Stack.Screen
       name="ProductList"
       component={ProductListScreen}

@@ -1,77 +1,61 @@
-import React from 'react';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import CartScreen from '../screens/CartScreen';
-import WishlistScreen from '../screens/WishlistScreen';
-import ProfileScreen from '../screens/ProfileScreen';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { NavigationContainer } from '@react-navigation/native';
-import CustomTabBar from '../components/CustomTabBar';
-import ProductsStack from './ProductsStack';
-import { ProductsStackParamList } from './ProductsStack';
-import { NavigatorScreenParams } from '@react-navigation/native';
-export type RootTabParamList = {
-  Products: NavigatorScreenParams<ProductsStackParamList>;
-  Wishlist: undefined;
-  Cart: undefined;
-  Profile: undefined;
-};
-const Tab = createBottomTabNavigator<RootTabParamList>();
+import AuthNavigator from './AuthNavigator';
+import MainTabNavigator from './MainTabNavigator';
+import { RootState } from '../redux/Store/store';
+import { setUser } from '../redux/reducers/authSlice';
+import * as Keychain from 'react-native-keychain';
+import TokenRefresher from '../components/TokenRefresher';
 const AppNavigator = () => {
+  const dispatch = useDispatch();
+  const user = useSelector((state: RootState) => state.auth.user);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadToken = async () => {
+      try {
+        const credentials = await Keychain.getGenericPassword();
+        if (credentials) {
+          console.log('🔐 Token found:', credentials.password);
+
+          // If you have an endpoint to fetch user profile using token, call it here.
+          dispatch(
+            setUser({
+              accessToken: credentials.password,
+              id: 1,
+              username: 'autologin',
+              email: 'autologin@dummy.com',
+              firstName: 'Auto',
+              lastName: 'Login',
+              gender: 'unknown',
+              image: '',
+              refreshToken: '', // optional
+            }),
+          );
+        }
+      } catch (error) {
+        console.log('🔒 Error retrieving token:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadToken();
+  }, [dispatch]);
+
+  if (loading) return null; // Or a splash/loading screen
+
   return (
     <NavigationContainer>
-      <Tab.Navigator
-        screenOptions={{ headerShown: false }}
-        tabBar={props => <CustomTabBar {...props} />}
-      >
-        <Tab.Screen name="Products" component={ProductsStack} />
-        <Tab.Screen
-          name="Cart"
-          component={CartScreen}
-          options={{
-            headerShown: true,
-            headerTitle: 'Cart',
-            headerTitleStyle: {
-              fontSize: 30,
-              fontWeight: '700',
-              color: '#1e1e1e',
-            },
-            headerStyle: {
-              backgroundColor: '#fff',
-            },
-          }}
-        />
-        <Tab.Screen
-          name="Wishlist"
-          component={WishlistScreen}
-          options={{
-            headerShown: true,
-            headerTitle: 'WishList',
-            headerTitleStyle: {
-              fontSize: 30,
-              fontWeight: '700',
-              color: '#1e1e1e',
-            },
-            headerStyle: {
-              backgroundColor: '#fff',
-            },
-          }}
-        />
-        <Tab.Screen
-          name="Profile"
-          component={ProfileScreen}
-          options={{
-            headerShown: true,
-            headerTitle: 'Profile',
-            headerTitleStyle: {
-              fontSize: 30,
-              fontWeight: '700',
-              color: '#1e1e1e',
-            },
-            headerStyle: {
-              backgroundColor: '#fff',
-            },
-          }}
-        />
-      </Tab.Navigator>
+      {user ? (
+        <>
+          <TokenRefresher />
+          <MainTabNavigator />
+        </>
+      ) : (
+        <AuthNavigator />
+      )}
     </NavigationContainer>
   );
 };
